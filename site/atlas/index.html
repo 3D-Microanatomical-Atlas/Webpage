@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Zebrafish Atlas — BioAtlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse all zebrafish atlas slide series by developmental stage and section plane.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <script>const ROOT = "..", PAGE = "atlas";</script>
+  <div id="nav"></div>
+  <script src="../assets/js/nav.js"></script>
+
+  <div class="bgimg-1" style="min-height:28vh">
+    <div class="hero-caption" style="padding:8vh 10% 6vh">
+      <span class="border">Atlas</span>
+      <p class="hero-sub">Currently <b id="slideTotal">630</b> slides &middot; click a number to open the virtual slide viewer</p>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <div class="card">
+      <table id="sampleTable">
+        <thead>
+          <tr>
+            <th>Orientation</th>
+            <th>Samples</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <p class="table-note" id="labeled">
+      <span class="swatch"></span>
+      Labeled series — these series contain annotated slides
+      (4dpf: all planes &middot; 21&ndash;29dpf: coronal &amp; sagittal).
+    </p>
+    <p class="pending" id="pendingStages"></p>
+  </div>
+
+  <footer>
+    BioAtlas &middot; bioatlas.io &middot;
+    <a href="https://bio-atlas.psu.edu" target="_blank" rel="noopener">Original data: Penn State Bio-Atlas</a>
+  </footer>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/atlas-data.js"></script>
+  <script src="../assets/js/volumes.js"></script>
+  <script src="../assets/js/ng.js"></script>
+  <script src="../assets/js/atlas.js"></script>
+</body>
+</html>

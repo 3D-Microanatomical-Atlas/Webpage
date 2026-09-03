@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BioAtlas — Zebrafish Atlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A web-based atlas of zebrafish anatomy and histology across the life span — brightfield virtual slides in coronal, sagittal, and transverse planes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <script>const ROOT = ".", PAGE = "home";</script>
+  <div id="nav"></div>
+  <script src="assets/js/nav.js"></script>
+
+  <div class="bgimg-1">
+    <div class="hero-caption">
+      <span class="border">Zebrafish Atlas</span>
+      <p class="hero-sub">Anatomy &amp; histology across the life span — from 24&nbsp;hpf embryos to 36&nbsp;mpf adults</p>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <div class="section-title"><h2>About the atlas</h2></div>
+    <p class="blurb">
+      BioAtlas presents complete series of brightfield virtual slides of the zebrafish
+      (<i>Danio rerio</i>) sectioned in the coronal, sagittal, and transverse planes at
+      developmental stages spanning the entire life span. Slides can be explored at up
+      to 40&times; magnification in the in-browser virtual slide viewer. Selected series
+      are annotated with anatomical labels.
+    </p>
+
+    <div class="stats">
+      <div class="stat"><b id="statSlides">630</b><span>slides</span></div>
+      <div class="stat"><b id="statStages">17</b><span>life stages</span></div>
+      <div class="stat"><b>3</b><span>section planes</span></div>
+      <div class="stat"><b>40&times;</b><span>max magnification</span></div>
+    </div>
+
+    <p class="blurb">
+      <a class="textlink" href="atlas/">Browse the full atlas &rarr;</a>
+      &nbsp;&middot;&nbsp;
+      <a class="textlink" href="3d/">Explore 3D micro-CT — slice in any direction &rarr;</a>
+    </p>
+
+    <p class="blurb" style="font-size:13px">
+      Imagery originates from the Zebrafish Atlas created at Penn State University
+      (Cheng Lab, Jake Gittlen Laboratories for Cancer Research) —
+      <a class="textlink" href="https://bio-atlas.psu.edu/zf/progress.php" target="_blank" rel="noopener">bio-atlas.psu.edu</a>.
+      Please cite the original atlas when using these images in publications.
+    </p>
+  </div>
+
+  <footer>
+    BioAtlas &middot; bioatlas.io &middot;
+    <a href="https://bio-atlas.psu.edu" target="_blank" rel="noopener">Original data: Penn State Bio-Atlas</a>
+  </footer>
+
+  <script src="assets/js/atlas-data.js"></script>
+  <script>
+    document.getElementById("statSlides").textContent = ATLAS_DATA.totalSlides;
+    document.getElementById("statStages").textContent =
+      ATLAS_DATA.ages.filter(a => Object.keys(a.planes).length).length;
+  </script>
+</body>
+</html>

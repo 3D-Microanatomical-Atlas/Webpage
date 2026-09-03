@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>3D — BioAtlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Volume-rendered 3D micro-CT / histotomography of zebrafish with arbitrary-plane slicing in Neuroglancer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .vol-card h3 { margin: 0 0 6px; }
+    .vol-card p  { color: #bbb; margin: 6px 0 14px; }
+    .vol-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .vol-actions a {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 5px; padding: 7px 16px; letter-spacing: 2px;
+    }
+    a.btn-3d    { background: var(--accent); }
+    a.btn-3d:hover { filter: brightness(1.15); }
+    a.btn-slice { background: var(--pill); }
+    a.btn-slice:hover { background: var(--pill-hover); }
+    .howto { color: #999; font-size: 13px; letter-spacing: 1px; }
+    .howto code { background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <script>const ROOT = "..", PAGE = "3d";</script>
+  <div id="nav"></div>
+  <script src="../assets/js/nav.js"></script>
+
+  <div class="bgimg-1" style="min-height:28vh">
+    <div class="hero-caption" style="padding:8vh 10% 6vh">
+      <span class="border">3D</span>
+      <p class="hero-sub">Micro-CT histotomography &middot; volume rendering &middot; slice in any direction</p>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <div id="volumeList"></div>
+
+    <p class="howto">
+      <b style="color:#fff">How to slice in any direction:</b>
+      open the <i>Slice view</i>, then hold <code>Shift</code> and drag in any
+      cross-section panel to rotate the slicing plane freely — or use
+      <code>Shift</code>+drag in the 3D panel to re-orient all planes at once.
+      In the <i>3D volume</i> view, adjust <code>opacity3d</code>,
+      <code>alphaGamma</code>, and the contrast sliders in the rendering tab
+      (press <code>Ctrl+L</code> or click the layer name) to peel tissue away.
+      Toggle the annotation layer's visibility checkbox to show labeled anatomy.
+    </p>
+  </div>
+
+  <footer>
+    BioAtlas &middot; bioatlas.io &middot;
+    3D data: Cheng Lab / ZeACCF histotomography &middot; viewer:
+    <a href="https://github.com/google/neuroglancer" target="_blank" rel="noopener">Neuroglancer</a>
+  </footer>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/volumes.js"></script>
+  <script src="../assets/js/ng.js"></script>
+  <script>
+    const list = document.getElementById("volumeList");
+    BIOATLAS_VOLUMES.forEach(vol => {
+      const card = document.createElement("div");
+      card.className = "card vol-card";
+      card.innerHTML =
+        "<h3>" + vol.label + "</h3>" +
+        "<p>" + (vol.description || "") + "</p>";
+      const actions = document.createElement("div");
+      actions.className = "vol-actions";
+      const bFull = document.createElement("a");
+      bFull.className = "btn-3d";
+      bFull.target = "_blank"; bFull.rel = "noopener noreferrer";
+      bFull.href = NG.url(vol, "full");
+      bFull.innerHTML = "&#9632; Full 3D render";
+      bFull.title = "Shaded volume rendering (ambient occlusion, sorted compositing)";
+      const b3d = document.createElement("a");
+      b3d.className = "btn-slice";
+      b3d.target = "_blank"; b3d.rel = "noopener noreferrer";
+      b3d.href = NG.url(vol, "3d");
+      b3d.textContent = "3D (basic)";
+      b3d.title = "Stock Neuroglancer volume rendering, self-hosted client";
+      const bSlice = document.createElement("a");
+      bSlice.className = "btn-slice";
+      bSlice.target = "_blank"; bSlice.rel = "noopener noreferrer";
+      bSlice.href = NG.url(vol, "slice");
+      bSlice.textContent = "Slice view";
+      actions.appendChild(bFull);
+      actions.appendChild(b3d);
+      actions.appendChild(bSlice);
+      card.appendChild(actions);
+      list.appendChild(card);
+    });
+  </script>
+</body>
+</html>

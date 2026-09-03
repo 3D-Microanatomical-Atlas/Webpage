@@ -1,0 +1,4 @@
+# migrated tile data can be huge — decide deliberately whether to commit it
+site/tiles/*.tmp.png
+__pycache__/
+.DS_Store

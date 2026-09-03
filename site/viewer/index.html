@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Virtual Slide Viewer — BioAtlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="viewer-body">
+  <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+    <div id="osd"></div>
+    <div id="fallback">
+      <div>
+        <h3>Tiles not available yet</h3>
+        <p>This slide's image data has not been migrated to bioatlas.io yet.<br>
+           You can view it on the original Penn State server:</p>
+        <p><a id="psuLink" href="#" target="_blank" rel="noopener">Open in the PSU Zebrafish Atlas viewer &rarr;</a></p>
+        <p><a href="../atlas/">&larr; Back to the atlas</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="viewer-bar">
+    <a href="../atlas/" title="Back to atlas">&larr; Atlas</a>
+    <span class="title" id="slideTitle">&nbsp;</span>
+    <span style="flex:1"></span>
+    <button id="prevBtn" title="Previous slide in series">&larr; Prev</button>
+    <select id="slideSelect" title="Jump to slide"></select>
+    <button id="nextBtn" title="Next slide in series">Next &rarr;</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/atlas-data.js"></script>
+  <script src="../assets/js/viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+// 3D volumetric (micro-CT / histotomography) datasets shown on the /3d/ page
+// and as orange "3D" pills in the atlas table.
+//
+// Each entry:
+//   id        — used in URLs
+//   label     — display name
+//   stageIds  — atlas stage ids this volume belongs to (adds a 3D pill there)
+//   voxelUnit — [size, unit] per axis for the neuroglancer dimension (usually mm)
+//   image     — precomputed image volume URL (must be CORS-readable!)
+//   imageControls — initial shader slider values
+//   segmentation  — optional {url, segments, segmentColors} annotation layer
+//
+// To publish your own volume: convert it to neuroglancer "precomputed" format
+// with scripts/make_precomputed.py, upload it to storage with public CORS
+// (see README), then add an entry here pointing at that URL.
+
+const BIOATLAS_VOLUMES = [
+  {
+    id: "33dpf",
+    label: "33dpf zebrafish — micro-CT histotomography (1.4 µm)",
+    description:
+      "X-ray histotomography of a 33dpf zebrafish (Cheng Lab / ZeACCF, 1400nm " +
+      "reconstruction) with anatomical annotation labels. Volume-rendered in 3D; " +
+      "cross-section planes can be rotated to slice in any direction.",
+    stageIds: ["30-44dpf"],
+    voxelUnit: [0.001, "m"], // millimetres
+    image:
+      "precomputed://https://cephalopod.team/assets/precomputed_repository/ZeACCF/33dpf_Atlas_1400nm/33dpf_sagittal_chenglab_Reconstruct_1400nm/",
+    imageControls: {
+      lo: 0.09,
+      brightness: 0.04,
+      contrast: 0.02,
+      opacity3d: 0.234,
+      alphaGamma: 2.2,
+    },
+    volumeRenderingGain: 3.7,
+    // Settings for the "Full 3D render" preset (webXR client) — taken from
+    // the cephalopod.team reference view of this same volume.
+    fullRender: {
+      controls: { lo: 0.06, brightness: 0.04, contrast: 0.02,
+                  opacity3d: 0.234, alphaGamma: 2.2 },
+      gain: 3.4,
+      depthSamples: 4096,
+    },
+    segmentation: {
+      url:
+        "precomputed://https://cephalopod.team/assets/precomputed_repository/ZeACCF/33dpf_Atlas_1400nm/33dpf_sagittal_chenglab_Annotation_1400nm/",
+      name: "33dpf annotation labels",
+      segments: [
+        "0","1000","10000","1100","11000","1110","1120","1130","1200","12000",
+        "2000","2100","2200","2300","2400","2500","3000","3100","3110","3200",
+        "4000","4100","4200","5000","5100","5200","5210","5300","5400","6000",
+        "6100","6110","6111","6120","6130","6140","6141","6142","6150","6160",
+        "6170","6180","6190","6191","6200","6300","6310","6311","6312","6313",
+        "6314","6315","6400","6500","6510","6520","6600","8000","8100","8200",
+        "8300","8400","9000","9100","9110","9120","9130","9140","9141","9200",
+        "9300","9310","9311"
+      ],
+      segmentColors: {
+        "0":"#ffffff","1000":"#ffffff","1100":"#ff00cc","1110":"#ff00ab",
+        "1120":"#ff00ee","1130":"#ff00aa","1200":"#ff00bb","2000":"#ffffff",
+        "2100":"#74ff7f","2200":"#c8ffb4","2300":"#8eff99","2400":"#8eff8a",
+        "2500":"#8eff00","3000":"#ffffff","3100":"#94e7ff","3110":"#94e7dd",
+        "3200":"#91e7ff","4000":"#ffffff","4100":"#e95b00","4200":"#e95b20",
+        "5000":"#ffffff","5100":"#1f00d4","5200":"#ffffff","5210":"#1f00d9",
+        "5300":"#1f00d6","5400":"#1f00d7","6000":"#ffffff","6100":"#ff0000",
+        "6110":"#9f0000","6111":"#ff0080","6120":"#9f0088","6130":"#9f0068",
+        "6140":"#9f0048","6141":"#950040","6142":"#950050","6150":"#9f0072",
+        "6160":"#950028","6170":"#9f0008","6180":"#940060","6190":"#f40022",
+        "6191":"#f4002a","6200":"#ff0a11","6300":"#b4000d","6310":"#b4000d",
+        "6311":"#000000","6312":"#000000","6313":"#000000","6314":"#000000",
+        "6315":"#ff0007","6400":"#b4000a","6500":"#ff1050","6510":"#ff1000",
+        "6520":"#ff1100","6600":"#b4002a","8000":"#ffffff","8100":"#ff7e00",
+        "8200":"#ffffff","8300":"#ff7e35","8400":"#ffffff","9000":"#ffffff",
+        "9100":"#ffffff","9110":"#00aa29","9120":"#00aa39","9130":"#00aa99",
+        "9140":"#00aa80","9141":"#00aa49","9200":"#ffffff","9300":"#ffffff",
+        "9310":"#b4006d","9311":"#b4006a","10000":"#ffffff","11000":"#f3ffa4",
+        "12000":"#f9ffaa"
+      },
+    },
+  },
+
+  // ---- Template for your own dataset (uncomment and edit) ----
+  // {
+  //   id: "my-volume",
+  //   label: "My zebrafish volume",
+  //   description: "Describe the sample, resolution, and provenance here.",
+  //   stageIds: ["12mpf-male"],
+  //   voxelUnit: [0.001, "m"],
+  //   image: "precomputed://https://tiles.bioatlas.io/volumes/my-volume/image",
+  //   imageControls: { lo: 0, brightness: 0, contrast: 0,
+  //                    opacity3d: 0.2, alphaGamma: 2.0 },
+  //   volumeRenderingGain: 3.0,
+  //   segmentation: null,
+  // },
+];
