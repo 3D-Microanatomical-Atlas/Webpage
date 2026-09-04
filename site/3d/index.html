@@ -82,7 +82,7 @@
       const b3d = document.createElement("a");
       b3d.className = "btn-slice";
       b3d.target = "_blank"; b3d.rel = "noopener noreferrer";
-      b3d.href = NG.url(vol, "3d");
+      b3d.href = vol.basic3dUrl || NG.url(vol, "3d");
       b3d.textContent = "3D (basic)";
       b3d.title = "Stock Neuroglancer volume rendering, self-hosted client";
       const bSlice = document.createElement("a");
