@@ -69,7 +69,7 @@
       a.className = "pill3d";
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-      a.href = NG.url(vol, "full");
+      a.href = vol.basic3dUrl || NG.url(vol, "full");
       a.innerHTML = "&#9632; 3D";
       a.title = vol.label;
       cell.appendChild(a);
