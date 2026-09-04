@@ -231,6 +231,10 @@ footer {
 footer a { color: #9ecbff; font-size: 12px; }
 footer .funding { display: block; margin-top: 10px; color: #888; letter-spacing: 1px; }
 
+/* ---------- feature image ---------- */
+.feature { max-width: 940px; margin: 28px auto 8px; text-align: center; }
+.feature img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); }
+
 /* ---------- project team ---------- */
 .team { max-width: 900px; margin: 0 auto 20px; }
 .team-lead { text-align: center; margin: 6px 0 26px; }
