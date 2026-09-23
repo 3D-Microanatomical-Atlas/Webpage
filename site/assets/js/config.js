@@ -38,7 +38,7 @@ const BIOATLAS_CONFIG = {
   //   Formspree:  "https://formspree.io/f/XXXXXXXX"
   //   FormSubmit: "https://formsubmit.co/ajax/XXXXXXXXXXXXXXXX"  (random alias)
   // Leave empty until configured; the form then shows a short setup notice.
-  FEEDBACK_ENDPOINT: "",
+  FEEDBACK_ENDPOINT: "https://formspree.io/f/xwlpbndv",
 
   SITE_NAME: "BioAtlas",
 };
