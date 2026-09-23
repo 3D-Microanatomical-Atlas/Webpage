@@ -21,5 +21,6 @@
     '<a' + cls("references") + ' href="' + R + '/references/">References</a>' +
     '<a' + cls("resources") + ' href="' + R + '/resources/">Resources</a>' +
     '<a' + cls("updates") + ' href="' + R + '/updates/">Updates</a>' +
+    '<a' + cls("feedback") + ' href="' + R + '/feedback/">Feedback</a>' +
     "</div>";
 })();

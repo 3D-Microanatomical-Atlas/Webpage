@@ -32,5 +32,13 @@ const BIOATLAS_CONFIG = {
   NG_CLIENT_FULL:
     "https://cephalopod.team/histotomography/webXR/08062026_v1/client/",
 
+  // Feedback form endpoint (see feedback/index.html).
+  // Paste the token URL from your form-to-email provider here. Your email
+  // address is NEVER stored in this repo — the provider maps this token to it.
+  //   Formspree:  "https://formspree.io/f/XXXXXXXX"
+  //   FormSubmit: "https://formsubmit.co/ajax/XXXXXXXXXXXXXXXX"  (random alias)
+  // Leave empty until configured; the form then shows a short setup notice.
+  FEEDBACK_ENDPOINT: "",
+
   SITE_NAME: "BioAtlas",
 };

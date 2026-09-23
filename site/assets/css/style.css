@@ -231,6 +231,35 @@ footer {
 footer a { color: #9ecbff; font-size: 12px; }
 footer .funding { display: block; margin-top: 10px; color: #888; letter-spacing: 1px; }
 
+/* ---------- feedback (email compose) ---------- */
+.compose { max-width: 760px; margin: 24px auto; background: rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.14); border-radius: 8px; overflow: hidden; }
+.compose-head { background: rgba(255,255,255,.05); padding: 12px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.12); color: #fff;
+  letter-spacing: 2px; font-size: 14px; text-transform: uppercase; }
+.compose-row { display: flex; align-items: center; gap: 12px;
+  padding: 0 18px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.compose-row label { width: 74px; color: #9ecbff; font-size: 12px;
+  letter-spacing: 2px; text-transform: uppercase; flex: none; }
+.compose-row .fixed { color: #bbb; padding: 13px 0; letter-spacing: 1px; }
+.compose input, .compose textarea { flex: 1; background: transparent; border: 0;
+  color: #fff; font: 15px "Lato", sans-serif; letter-spacing: .5px;
+  padding: 13px 0; outline: none; }
+.compose textarea { min-height: 240px; padding: 16px 0; resize: vertical; line-height: 1.6; }
+.compose-body { padding: 0 18px; }
+.compose-actions { display: flex; align-items: center; gap: 16px;
+  padding: 14px 18px; border-top: 1px solid rgba(255,255,255,.12); }
+.compose-actions button { background: var(--accent); color: #fff; border: 0;
+  border-radius: 5px; padding: 10px 26px; letter-spacing: 2px; font-size: 14px;
+  cursor: pointer; font-family: "Lato", sans-serif; }
+.compose-actions button:hover { filter: brightness(1.12); }
+.compose-actions button:disabled { opacity: .5; cursor: default; }
+.form-status { color: #bbb; font-size: 13px; letter-spacing: 1px; }
+.form-status.ok { color: var(--labeled); }
+.form-status.err { color: #ff7a7a; }
+.feedback-intro { color: #bbb; max-width: 760px; margin: 24px auto 0;
+  text-align: center; letter-spacing: 1px; }
+
 /* ---------- feature image ---------- */
 .feature { max-width: 940px; margin: 28px auto 8px; text-align: center; }
 .feature img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); }

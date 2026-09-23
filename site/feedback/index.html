@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Feedback — BioAtlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Send feedback and comments about the BioAtlas zebrafish atlas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <script>const ROOT = "..", PAGE = "feedback";</script>
+  <div id="nav"></div>
+  <script src="../assets/js/nav.js"></script>
+
+  <div class="bgimg-1" style="min-height:0">
+    <div class="hero-caption" style="padding:9vh 10% 5vh">
+      <span class="border">Feedback</span>
+      <p class="hero-sub">Tell us what is useful, what is missing, or what to fix</p>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <p class="feedback-intro">
+      Comments, corrections, and suggestions are welcome. Complete the form
+      below and it will be delivered to the BioAtlas team.
+    </p>
+
+    <form class="compose" id="feedbackForm" novalidate>
+      <div class="compose-head">New message</div>
+
+      <div class="compose-row">
+        <label>To</label>
+        <span class="fixed">BioAtlas Team</span>
+      </div>
+      <div class="compose-row">
+        <label for="from">From</label>
+        <input type="email" id="from" name="email" placeholder="your email address" required>
+      </div>
+      <div class="compose-row">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="brief subject" required>
+      </div>
+
+      <div class="compose-body">
+        <textarea id="comments" name="message" placeholder="Write your comments here…" required></textarea>
+      </div>
+
+      <!-- Provider hints; ignored by providers that do not use them. -->
+      <input type="hidden" name="_subject" value="New BioAtlas feedback">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <div class="compose-actions">
+        <button type="submit" id="sendBtn">Send</button>
+        <span class="form-status" id="status"></span>
+      </div>
+    </form>
+  </div>
+
+  <footer>
+    BioAtlas &middot; bioatlas.io
+    <span class="funding">Supported by NIH ORIP award 1R24OD037633</span>
+  </footer>
+
+  <script src="../assets/js/config.js"></script>
+  <script>
+    (function () {
+      const cfg = (typeof BIOATLAS_CONFIG !== "undefined") ? BIOATLAS_CONFIG : {};
+      const endpoint = (cfg.FEEDBACK_ENDPOINT || "").trim();
+      const form = document.getElementById("feedbackForm");
+      const btn = document.getElementById("sendBtn");
+      const status = document.getElementById("status");
+
+      function setStatus(msg, cls) {
+        status.textContent = msg;
+        status.className = "form-status" + (cls ? " " + cls : "");
+      }
+
+      if (!endpoint) {
+        setStatus("Feedback delivery is not configured yet.", "err");
+        btn.disabled = true;
+        return;
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        btn.disabled = true;
+        setStatus("Sending…");
+        fetch(endpoint, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(form)
+        }).then(function (r) {
+          if (r.ok) {
+            form.reset();
+            setStatus("Thank you. Your feedback has been sent.", "ok");
+          } else {
+            r.json().then(function (d) {
+              const m = (d && d.errors && d.errors.map(x => x.message).join(", ")) ||
+                        "Something went wrong. Please try again.";
+              setStatus(m, "err");
+            }).catch(function () {
+              setStatus("Something went wrong. Please try again.", "err");
+            });
+          }
+        }).catch(function () {
+          setStatus("Network error. Please try again.", "err");
+        }).finally(function () {
+          btn.disabled = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
