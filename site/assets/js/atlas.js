@@ -13,6 +13,15 @@
     return !!list && list.indexOf(slide.s) !== -1;
   }
 
+  // Slides with a thumbnail image (thumbs-available.js, written by
+  // scripts/add_thumbnails.py) are shown as pictures instead of numbers.
+  const THUMBS = typeof BIOATLAS_THUMBS !== "undefined" ? BIOATLAS_THUMBS : {};
+  function thumbUrl(age, plane, slide) {
+    const list = THUMBS[age.id + "/" + plane];
+    if (!list || list.indexOf(slide.s) === -1) return null;
+    return "../thumbs/" + age.id + "/" + plane + "/" + slide.atlas + "_" + slide.s + ".jpg";
+  }
+
   function slideHref(age, plane, slide) {
     if (cfg.USE_PSU_FALLBACK && !hasTiles(age, plane, slide)) {
       return cfg.PSU_BASE + "view.php?atlas=" + slide.atlas + "&s=" + slide.s;
@@ -54,8 +63,24 @@
       a.href = slideHref(age, plane, slide);
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-      a.textContent = slide.n < 10 ? "0" + slide.n : String(slide.n);
-      if (series.labeled) a.className = "labeled";
+      const num = slide.n < 10 ? "0" + slide.n : String(slide.n);
+      const thumb = thumbUrl(age, plane, slide);
+      if (thumb) {
+        const img = document.createElement("img");
+        img.src = thumb;
+        img.loading = "lazy";
+        img.alt = age.label + " " + name + " section " + slide.n;
+        const label = document.createElement("span");
+        label.className = "num";
+        label.textContent = num;
+        a.appendChild(img);
+        a.appendChild(label);
+        a.classList.add("thumb");
+        cell.classList.add("has-thumbs");
+      } else {
+        a.textContent = num;
+      }
+      if (series.labeled) a.classList.add("labeled");
       a.title = age.label + " · " + name + " · slide " + slide.n;
       cell.appendChild(a);
     });
