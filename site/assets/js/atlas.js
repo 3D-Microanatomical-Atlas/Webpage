@@ -4,8 +4,17 @@
   const tbody = document.getElementById("tableBody");
   const pending = [];
 
+  // Slides with Deep Zoom tiles on bioatlas.io (tiles-available.js, written by
+  // scripts/tiff_to_dzi.py) open in the bioatlas.io viewer; the rest use the
+  // Penn State viewer while USE_PSU_FALLBACK is on.
+  const TILES = typeof BIOATLAS_TILES !== "undefined" ? BIOATLAS_TILES : {};
+  function hasTiles(age, plane, slide) {
+    const list = TILES[age.id + "/" + plane];
+    return !!list && list.indexOf(slide.s) !== -1;
+  }
+
   function slideHref(age, plane, slide) {
-    if (cfg.USE_PSU_FALLBACK) {
+    if (cfg.USE_PSU_FALLBACK && !hasTiles(age, plane, slide)) {
       return cfg.PSU_BASE + "view.php?atlas=" + slide.atlas + "&s=" + slide.s;
     }
     return "../viewer/?age=" + encodeURIComponent(age.id) +

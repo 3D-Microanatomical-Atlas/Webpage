@@ -47,15 +47,23 @@
     return cfg.PSU_BASE + "view.php?atlas=" + s.atlas + "&s=" + s.s;
   }
 
+  const TILES = typeof BIOATLAS_TILES !== "undefined" ? BIOATLAS_TILES : {};
+  const tiled = TILES[age.id + "/" + plane] || [];
+  function hasTiles(s) { return tiled.indexOf(s.s) !== -1; }
+
   const viewer = OpenSeadragon({
     id: "osd",
     prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
     showNavigator: true,
     navigatorPosition: "BOTTOM_RIGHT",
+    showZoomControl: true,
+    showHomeControl: true,
+    showFullPageControl: true,
     maxZoomPixelRatio: 2,
     minZoomImageRatio: 0.8,
     visibilityRatio: 1,
     constrainDuringPan: true,
+    gestureSettingsTouch: { pinchRotate: false },
   });
 
   viewer.addHandler("open-failed", function () {
@@ -75,13 +83,22 @@
     document.title = age.label + " " + planeName + " " + n + " — BioAtlas";
     history.replaceState(null, "",
       "?age=" + encodeURIComponent(age.id) + "&plane=" + plane + "&i=" + n);
+    if (cfg.USE_PSU_FALLBACK && !hasTiles(s)) {
+      // Not migrated yet: offer the Penn State viewer without a failed load.
+      viewer.close();
+      document.getElementById("psuLink").href = psuUrl(s);
+      fallback.style.display = "flex";
+      return;
+    }
     fallback.style.display = "none";
     viewer.open(dziUrl(s));
   }
 
+  const last = series.slides.length;
+  document.getElementById("firstBtn").onclick = () => load(1);
   document.getElementById("prevBtn").onclick = () => load(Math.max(1, i - 1));
-  document.getElementById("nextBtn").onclick = () =>
-    load(Math.min(series.slides.length, i + 1));
+  document.getElementById("nextBtn").onclick = () => load(Math.min(last, i + 1));
+  document.getElementById("lastBtn").onclick = () => load(last);
   select.onchange = () => load(parseInt(select.value, 10));
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft") document.getElementById("prevBtn").click();

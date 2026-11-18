@@ -22,7 +22,18 @@
   </div>
 
   <div class="page-wrap">
-    <div class="feature"><img src="images/segmentation-33dpf.png" alt="3D microanatomical segmentation of a 33 dpf zebrafish"></div>
+    <div class="feature">
+      <video id="heroVideo" src="images/kca098-head-rotation.mp4" poster="images/kca098-head-rotation-poster.jpg"
+             autoplay muted loop playsinline preload="auto"
+             aria-label="Rotating 3D segmentation of the zebrafish head (KCA098) from micro-CT"></video>
+    </div>
+    <script>
+      // Respect the visitor's reduced-motion setting: show the still frame instead.
+      if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const v = document.getElementById("heroVideo");
+        v.removeAttribute("autoplay"); v.pause(); v.controls = true;
+      }
+    </script>
 
     <div class="section-title"><h2>About the atlas</h2></div>
     <p class="blurb">

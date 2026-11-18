@@ -26,14 +26,17 @@
     <a href="../atlas/" title="Back to atlas">&larr; Atlas</a>
     <span class="title" id="slideTitle">&nbsp;</span>
     <span style="flex:1"></span>
-    <button id="prevBtn" title="Previous slide in series">&larr; Prev</button>
+    <button id="firstBtn" title="First slide in series">&laquo;</button>
+    <button id="prevBtn" title="Previous slide (left arrow key)">&lsaquo; Prev</button>
     <select id="slideSelect" title="Jump to slide"></select>
-    <button id="nextBtn" title="Next slide in series">Next &rarr;</button>
+    <button id="nextBtn" title="Next slide (right arrow key)">Next &rsaquo;</button>
+    <button id="lastBtn" title="Last slide in series">&raquo;</button>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/atlas-data.js"></script>
+  <script src="../assets/js/tiles-available.js"></script>
   <script src="../assets/js/viewer.js"></script>
 </body>
 </html>
