@@ -307,7 +307,7 @@ footer .funding { display: block; margin-top: 10px; color: #888; letter-spacing:
 
 /* ---------- viewer page ---------- */
 .viewer-body { display: flex; flex-direction: column; height: 100vh; }
-#osd { flex: 1; background: #000; }
+#osd { flex: 1; background: #fff; }
 .viewer-bar {
   display: flex;
   align-items: center;

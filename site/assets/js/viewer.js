@@ -88,6 +88,7 @@
     prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
     showNavigator: true,
     navigatorPosition: "BOTTOM_RIGHT",
+    navigatorBackground: "#fff",
     showZoomControl: true,
     showHomeControl: true,
     showFullPageControl: true,
