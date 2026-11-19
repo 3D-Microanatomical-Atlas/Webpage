@@ -22,8 +22,13 @@
     return "../thumbs/" + age.id + "/" + plane + "/" + slide.atlas + "_" + slide.s + ".jpg";
   }
 
+  // Slides with original Bio-Atlas tiles online (slides-index.js, written by
+  // scripts/build_slide_index.py; used once ORIGINAL_TILE_BASE is set).
+  const SLIDES = typeof BIOATLAS_SLIDES !== "undefined" ? BIOATLAS_SLIDES : {};
+  function hasOriginal(slide) { return !!cfg.ORIGINAL_TILE_BASE && !!SLIDES[slide.s]; }
+
   function slideHref(age, plane, slide) {
-    if (cfg.USE_PSU_FALLBACK && !hasTiles(age, plane, slide)) {
+    if (cfg.USE_PSU_FALLBACK && !hasOriginal(slide) && !hasTiles(age, plane, slide)) {
       return cfg.PSU_BASE + "view.php?atlas=" + slide.atlas + "&s=" + slide.s;
     }
     return "../viewer/?age=" + encodeURIComponent(age.id) +

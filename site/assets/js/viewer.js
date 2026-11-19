@@ -51,6 +51,38 @@
   const tiled = TILES[age.id + "/" + plane] || [];
   function hasTiles(s) { return tiled.indexOf(s.s) !== -1; }
 
+  // Original Bio-Atlas tile pyramids (slides-index.js, written by
+  // scripts/build_slide_index.py), shown as stored: level 0 is full
+  // resolution, each further level is half the size, tiles are numbered row by
+  // row, and the last levels are single images.
+  const SLIDES = typeof BIOATLAS_SLIDES !== "undefined" ? BIOATLAS_SLIDES : {};
+  function originalInfo(s) { return cfg.ORIGINAL_TILE_BASE ? SLIDES[s.s] : null; }
+  function originalSource(s, info) {
+    const w = info[0], h = info[1], tw = info[2], th = info[3];
+    const levels = info[4], single = info[5];
+    const top = Math.ceil(Math.log2(Math.max(w, h)));   // OpenSeadragon's full-resolution level
+    const base = cfg.ORIGINAL_TILE_BASE + "/" + String(s.s).padStart(10, "0") + "/";
+    function levelWidth(L) { return Math.ceil(w / Math.pow(2, L)); }
+    function levelHeight(L) { return Math.ceil(h / Math.pow(2, L)); }
+    return {
+      width: w, height: h, tileWidth: tw, tileHeight: th, tileOverlap: 0,
+      minLevel: top - (levels - 1), maxLevel: top,
+      getTileWidth: function (level) {
+        const L = top - level;
+        return L >= single ? levelWidth(L) : tw;
+      },
+      getTileHeight: function (level) {
+        const L = top - level;
+        return L >= single ? levelHeight(L) : th;
+      },
+      getTileUrl: function (level, x, y) {
+        const L = top - level;
+        const cols = L >= single ? 1 : Math.ceil(levelWidth(L) / tw);
+        return base + L + "/" + (y * cols + x) + ".jpg";
+      },
+    };
+  }
+
   const viewer = OpenSeadragon({
     id: "osd",
     prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
@@ -83,7 +115,8 @@
     document.title = age.label + " " + planeName + " " + n + " — BioAtlas";
     history.replaceState(null, "",
       "?age=" + encodeURIComponent(age.id) + "&plane=" + plane + "&i=" + n);
-    if (cfg.USE_PSU_FALLBACK && !hasTiles(s)) {
+    const info = originalInfo(s);
+    if (cfg.USE_PSU_FALLBACK && !info && !hasTiles(s)) {
       // Not migrated yet: offer the Penn State viewer without a failed load.
       viewer.close();
       document.getElementById("psuLink").href = psuUrl(s);
@@ -91,7 +124,7 @@
       return;
     }
     fallback.style.display = "none";
-    viewer.open(dziUrl(s));
+    viewer.open(info ? originalSource(s, info) : dziUrl(s));
   }
 
   const last = series.slides.length;
